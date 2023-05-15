@@ -42,7 +42,12 @@ class HomeScreen extends StatelessWidget {
                             Navigator.push(context, MaterialPageRoute(
                                 builder: (BuildContext context) {
                               return UpdateTaskScreen(
-                                  id: cubit.tasks[index]['id']);
+                                id: cubit.tasks[index]['id'],
+                                title: cubit.tasks[index]['title'],
+                                date: cubit.tasks[index]['date'],
+                                time: cubit.tasks[index]['time'],
+                                des: cubit.tasks[index]['description'],
+                              );
                             }));
                           },
                           child: Card(
@@ -61,12 +66,12 @@ class HomeScreen extends StatelessWidget {
                                         cubit.tasks[index]['title'],
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyText1,
+                                            .bodyLarge,
                                       ),
                                       Text(
                                         cubit.tasks[index]['time'],
                                         style:
-                                            Theme.of(context).textTheme.caption,
+                                            Theme.of(context).textTheme.bodySmall,
                                       ),
                                       IconButton(
                                           onPressed: () {
@@ -79,7 +84,7 @@ class HomeScreen extends StatelessWidget {
                                   Text(
                                     cubit.tasks[index]['description'],
                                     style:
-                                        Theme.of(context).textTheme.headline6,
+                                        Theme.of(context).textTheme.titleLarge,
                                   ),
                                 ],
                               ),
@@ -98,7 +103,7 @@ class HomeScreen extends StatelessWidget {
                             'There is no tasks here'.tr(),
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText1!
+                                .bodyLarge!
                                 .copyWith(color: Colors.deepOrange),
                           ),
                         ],
