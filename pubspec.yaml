@@ -36,7 +36,7 @@ dependencies:
   bloc: ^8.0.3
   flutter_bloc: ^8.0.1
   sqflite: ^2.0.2
-  intl: ^0.17.0
+  intl: ^0.18.1
   conditional_builder_null_safety: ^0.0.6
   animated_splash_screen: ^1.2.0
   easy_localization: ^3.0.0
@@ -50,9 +50,8 @@ dependencies:
   # dependencies can be manually updated by changing the version numbers below to
   # the latest version available on pub.dev. To see which dependencies have newer
   # versions available, run `flutter pub outdated`.
-  flutter_launcher_icons: ^0.9.2
-  dismissible_page: ^0.7.0
-  flutter_icons: ^1.1.0
+  flutter_launcher_icons: ^0.13.1
+  dismissible_page: ^1.0.2
 
 dev_dependencies:
   flutter_test:
@@ -63,7 +62,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^1.0.0
+  flutter_lints: ^2.0.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
