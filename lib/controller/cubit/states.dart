@@ -17,3 +17,5 @@ class SuccessUpdatingDataFromDatabaseState extends TodoStates {}
 class ChangeLanguageToEnglishState extends TodoStates {}
 
 class ChangeLanguageToArabicState extends TodoStates {}
+
+class ChangeAppModeState extends TodoStates{}

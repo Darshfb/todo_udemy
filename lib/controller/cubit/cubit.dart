@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:todo/controller/cubit/states.dart';
 
@@ -24,28 +25,26 @@ class TodoCubit extends Cubit<TodoStates> {
     openDatabase('File.db', version: 1, onCreate: (database, version) {
       // here our database is create (only for the first time)
       // if we don't the path file name
-      debugPrint('The database is created');
+      print('The database is created');
       database
           .execute('CREATE TABLE tasks'
               '(id INTEGER PRIMARY KEY, title TEXT, date TEXT, time TEXT, description TEXT)')
           .then((value) {
         // here the table is created
-        debugPrint('our table is created');
+        print('our table is created');
       }).catchError((error) {
         // here is an error when creating our table
-        debugPrint('an error when creating the table');
+        print('an error when creating the table');
       });
     }, onOpen: (database) {
-      debugPrint('database file is opened');
+      print('database file is opened');
       getDataFromDatabase(database);
     }).then((value) {
       // the database file is succeed to open
       database = value;
       emit(CreateTodoDatabaseState());
     }).catchError((error) {
-      debugPrint('errro when opening the file');
-
-      debugPrint('error when opening the file');
+      print('errro when opening the file');
     });
   }
 
@@ -63,11 +62,11 @@ class TodoCubit extends Cubit<TodoStates> {
               '(title, date, time, description) VALUES '
               '("$title", "$date", "$time", "$description")')
           .then((value) {
-        debugPrint('$value is inserted successfully');
+        print('$value is inserted successfully');
         getDataFromDatabase(database);
         emit(SuccessInsertToDatabaseState());
       }).catchError((error) {
-        debugPrint('an error when inserting into database');
+        print('an error when inserting into database');
       });
     });
   }
@@ -84,9 +83,9 @@ class TodoCubit extends Cubit<TodoStates> {
         tasks.add(i);
       }
       emit(SuccessGettingDataFromDatabaseState());
-      debugPrint('$value');
+      print('$value');
     }).catchError((error) {
-      debugPrint('error when getting data from database');
+      print('error when getting data from database');
     });
   }
 
@@ -112,11 +111,11 @@ class TodoCubit extends Cubit<TodoStates> {
             where: 'id =?',
             whereArgs: [id])
         .then((value) {
-      debugPrint('$value updating data has successfully happened');
+      print('$value updating data has successfully happened');
       emit(SuccessUpdatingDataFromDatabaseState());
       getDataFromDatabase(database);
     }).catchError((error) {
-      debugPrint('error when updating data');
+      print('error when updating data');
     });
   }
 
@@ -124,11 +123,11 @@ class TodoCubit extends Cubit<TodoStates> {
 
   void deleteDataFromDatabase({required int id}) {
     database!.rawDelete('DELETE FROM tasks WHERE id = ? ', [id]).then((value) {
-      debugPrint('$value deleted successfully');
+      print('$value deleted successfully');
       emit(DeletingDataFromDatabaseState());
       getDataFromDatabase(database);
     }).catchError((error) {
-      debugPrint('an error when deleting data');
+      print('an error when deleting data');
     });
   }
 
@@ -144,6 +143,18 @@ class TodoCubit extends Cubit<TodoStates> {
       context.locale = const Locale('en', 'US');
     }
     emit(ChangeLanguageToEnglishState());
+  }
+
+  bool isDark = false;
+  void changeThemeMode({bool? darkMode})async{
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    if(darkMode != null){
+      isDark = darkMode;
+    }else{
+      isDark = !isDark;
+      sharedPreferences.setBool("isDark", isDark);
+    }
+    emit(ChangeAppModeState());
   }
 
 }
