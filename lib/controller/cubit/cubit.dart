@@ -25,26 +25,26 @@ class TodoCubit extends Cubit<TodoStates> {
     openDatabase('File.db', version: 1, onCreate: (database, version) {
       // here our database is create (only for the first time)
       // if we don't the path file name
-      print('The database is created');
+      debugPrint('The database is created');
       database
           .execute('CREATE TABLE tasks'
               '(id INTEGER PRIMARY KEY, title TEXT, date TEXT, time TEXT, description TEXT)')
           .then((value) {
         // here the table is created
-        print('our table is created');
+        debugPrint('our table is created');
       }).catchError((error) {
         // here is an error when creating our table
-        print('an error when creating the table');
+        debugPrint('an error when creating the table');
       });
     }, onOpen: (database) {
-      print('database file is opened');
+      debugPrint('database file is opened');
       getDataFromDatabase(database);
     }).then((value) {
       // the database file is succeed to open
       database = value;
       emit(CreateTodoDatabaseState());
     }).catchError((error) {
-      print('errro when opening the file');
+      debugPrint('errro when opening the file');
     });
   }
 
@@ -62,11 +62,11 @@ class TodoCubit extends Cubit<TodoStates> {
               '(title, date, time, description) VALUES '
               '("$title", "$date", "$time", "$description")')
           .then((value) {
-        print('$value is inserted successfully');
+        debugPrint('$value is inserted successfully');
         getDataFromDatabase(database);
         emit(SuccessInsertToDatabaseState());
       }).catchError((error) {
-        print('an error when inserting into database');
+        debugPrint('an error when inserting into database');
       });
     });
   }
@@ -83,9 +83,9 @@ class TodoCubit extends Cubit<TodoStates> {
         tasks.add(i);
       }
       emit(SuccessGettingDataFromDatabaseState());
-      print('$value');
+      debugPrint('$value');
     }).catchError((error) {
-      print('error when getting data from database');
+      debugPrint('error when getting data from database');
     });
   }
 
@@ -111,11 +111,11 @@ class TodoCubit extends Cubit<TodoStates> {
             where: 'id =?',
             whereArgs: [id])
         .then((value) {
-      print('$value updating data has successfully happened');
+      debugPrint('$value updating data has successfully happened');
       emit(SuccessUpdatingDataFromDatabaseState());
       getDataFromDatabase(database);
     }).catchError((error) {
-      print('error when updating data');
+      debugPrint('error when updating data');
     });
   }
 
@@ -123,11 +123,11 @@ class TodoCubit extends Cubit<TodoStates> {
 
   void deleteDataFromDatabase({required int id}) {
     database!.rawDelete('DELETE FROM tasks WHERE id = ? ', [id]).then((value) {
-      print('$value deleted successfully');
+      debugPrint('$value deleted successfully');
       emit(DeletingDataFromDatabaseState());
       getDataFromDatabase(database);
     }).catchError((error) {
-      print('an error when deleting data');
+      debugPrint('an error when deleting data');
     });
   }
 
