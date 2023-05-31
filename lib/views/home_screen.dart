@@ -23,6 +23,19 @@ class HomeScreen extends StatelessWidget {
             title: Text('My task'.tr()),
             elevation: 1,
             backgroundColor: Colors.deepOrange.shade200,
+            actions: [
+              BlocBuilder<TodoCubit, TodoStates>(
+                builder: (BuildContext context, state) => IconButton(
+                  onPressed: () {
+                    BlocProvider.of<TodoCubit>(context).changeThemeMode();
+                  },
+                  icon: Icon(
+                    BlocProvider.of<TodoCubit>(context).isDark ?
+                    Icons.dark_mode : Icons.light_mode,
+                  ),
+                ),
+              )
+            ],
           ),
           drawer: const Drawer(
             child: DrawerScreen(),
@@ -70,8 +83,9 @@ class HomeScreen extends StatelessWidget {
                                       ),
                                       Text(
                                         cubit.tasks[index]['time'],
-                                        style:
-                                            Theme.of(context).textTheme.bodySmall,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall,
                                       ),
                                       IconButton(
                                           onPressed: () {

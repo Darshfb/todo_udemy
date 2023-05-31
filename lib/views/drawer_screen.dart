@@ -41,7 +41,7 @@ class DrawerScreen extends StatelessWidget {
                   child: Text('Arabic'.tr()),
                 ),
               ],
-            )
+            ),
           ],
         );
       },

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 ThemeData lightTheme = ThemeData(
+  useMaterial3: true,
     scaffoldBackgroundColor: Colors.white,
     // app bar theme
     appBarTheme: const AppBarTheme(
@@ -33,6 +34,7 @@ ThemeData lightTheme = ThemeData(
             borderRadius: BorderRadiusDirectional.circular(5.0))));
 
 ThemeData darkTheme = ThemeData(
+    useMaterial3: true,
     scaffoldBackgroundColor: const Color(0xff333739),
     // app bar theme
     appBarTheme: const AppBarTheme(

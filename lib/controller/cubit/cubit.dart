@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:todo/controller/cubit/states.dart';
 
@@ -143,4 +144,17 @@ class TodoCubit extends Cubit<TodoStates> {
     }
     emit(ChangeLanguageToEnglishState());
   }
+
+  bool isDark = false;
+  void changeThemeMode({bool? darkMode})async{
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    if(darkMode != null){
+      isDark = darkMode;
+    }else{
+      isDark = !isDark;
+      sharedPreferences.setBool("isDark", isDark);
+    }
+    emit(ChangeAppModeState());
+  }
+
 }
