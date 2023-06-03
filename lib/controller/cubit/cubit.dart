@@ -44,6 +44,8 @@ class TodoCubit extends Cubit<TodoStates> {
       emit(CreateTodoDatabaseState());
     }).catchError((error) {
       debugPrint('errro when opening the file');
+
+      debugPrint('error when opening the file');
     });
   }
 
