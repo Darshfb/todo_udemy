@@ -3,6 +3,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo/app_cubit/app_cubit.dart';
+import 'package:todo/app_cubit/app_states.dart';
 import 'package:todo/controller/cubit/cubit.dart';
 import 'package:todo/controller/cubit/states.dart';
 import 'package:todo/shared/styles/themes.dart';
@@ -36,14 +38,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (context) => TodoCubit()..createDatabase()),
         BlocProvider(
-            create: (context) => TodoCubit()
-              ..createDatabase()
-              ..changeThemeMode(darkMode: isDark)),
+            create: (context) => AppCubit()..changeThemeMode(darkMode: isDark))
       ],
-      child: BlocBuilder<TodoCubit, TodoStates>(
+      child: BlocBuilder<AppCubit, AppStates>(
         builder: (BuildContext context, state) {
-          var cubit = TodoCubit.get(context);
+          var cubit = AppCubit.get(context);
           return MaterialApp(
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,

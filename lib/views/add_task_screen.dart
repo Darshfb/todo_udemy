@@ -1,24 +1,24 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:todo/controller/cubit/cubit.dart';
 import 'package:todo/controller/cubit/states.dart';
 import 'package:todo/shared/componant.dart';
 
 class AddTaskScreen extends StatelessWidget {
-  TextEditingController titleController = TextEditingController();
-  TextEditingController timeController = TextEditingController();
-  TextEditingController dateController = TextEditingController();
-  TextEditingController desController = TextEditingController();
+  AddTaskScreen({Key? key}) : super(key: key);
+
+  final titleController = TextEditingController();
+  final timeController = TextEditingController();
+  final dateController = TextEditingController();
+  final desController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<TodoCubit, TodoStates>(
-      listener: (BuildContext context, state)
-      {
-        if(state is SuccessInsertToDatabaseState)
-        {
+      listener: (BuildContext context, state) {
+        if (state is SuccessInsertToDatabaseState) {
           Navigator.pop(context);
         }
       },
@@ -42,6 +42,7 @@ class AddTaskScreen extends StatelessWidget {
                           if (value!.isEmpty) {
                             return 'Please add your title'.tr();
                           }
+                          return null;
                         },
                         label: 'Title',
                         hintText: 'Add your Title',
@@ -56,13 +57,15 @@ class AddTaskScreen extends StatelessWidget {
                           if (value!.isEmpty) {
                             return 'Please add your Time'.tr();
                           }
+                          return null;
                         },
                         label: 'Time',
                         hintText: 'Add your Time',
                         prefixIcon: Icons.watch_later_outlined,
                         onTap: () {
                           showTimePicker(
-                                  context: context, initialTime: TimeOfDay.now())
+                                  context: context,
+                                  initialTime: TimeOfDay.now())
                               .then((value) {
                             timeController.text = value!.format(context);
                           }).catchError((error) {
@@ -79,6 +82,7 @@ class AddTaskScreen extends StatelessWidget {
                           if (value!.isEmpty) {
                             return 'Please add your Date'.tr();
                           }
+                          return null;
                         },
                         label: 'Date',
                         hintText: 'Add your Date',
@@ -107,6 +111,7 @@ class AddTaskScreen extends StatelessWidget {
                           if (value!.isEmpty) {
                             return 'Please add your description'.tr();
                           }
+                          return null;
                         },
                         label: 'Description',
                         hintText: 'Add your Description',
@@ -116,18 +121,18 @@ class AddTaskScreen extends StatelessWidget {
                     ),
                     MaterialButton(
                       height: 40.0,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25.0)),
                       minWidth: double.infinity,
                       color: Colors.deepOrange,
                       onPressed: () {
-                       if(_formKey.currentState!.validate())
-                       {
-                         cubit.insertToDatabase(
-                             title: titleController.text,
-                             date: dateController.text,
-                             time: timeController.text,
-                             description: desController.text);
-                       }
+                        if (_formKey.currentState!.validate()) {
+                          cubit.insertToDatabase(
+                              title: titleController.text,
+                              date: dateController.text,
+                              time: timeController.text,
+                              description: desController.text);
+                        }
                       },
                       child: Text('Add Task'.tr()),
                     ),
