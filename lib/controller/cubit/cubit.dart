@@ -145,4 +145,8 @@ class TodoCubit extends Cubit<TodoStates> {
     }
     emit(ChangeLanguageToEnglishState());
   }
+
+  bool isDark = false;
+
+ =
 }
