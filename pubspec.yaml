@@ -36,7 +36,7 @@ dependencies:
   bloc: ^8.0.3
   flutter_bloc: ^8.0.1
   sqflite: ^2.0.2
-  intl: ^0.18.1
+  intl: ^0.18.0
   conditional_builder_null_safety: ^0.0.6
   animated_splash_screen: ^1.2.0
   easy_localization: ^3.0.0
